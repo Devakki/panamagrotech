@@ -32,12 +32,12 @@
                               <div class="form-group row">
                                   <label for="customer_id" class="col-3 col-form-label">City</label>
                                       <div class="col-9">
-                                          <select data-live-search="true" name="city_id" id="city_id" data-parsley-required-message="You Must Select 1 Customer" required>
+                                          <select data-live-search="true" name="city_id" id="city_id" data-parsley-required-message="You Must Select 1 City" required>
                                             <option value="0">None</option>
                                             <?php
                                             foreach ($city as  $city) {
-                                              echo '<option value="'.$city->id_customer .'"'.
-                                              (($method=="edit")?(($city->id_customer==$sell_invoice->customer_id)?"selected":""):"")
+                                              echo '<option value="'.$city->id .'"'.
+                                              (($method=="edit")?(($city->id==$sell_invoice->city_id)?"selected":""):"")
                                               .' >'.$city->name.'</option>';
                                             }
                                             ?>
@@ -48,14 +48,7 @@
                                   <label for="customer_id" class="col-3 col-form-label">Customer</label>
                                       <div class="col-9">
                                           <select data-live-search="true" name="customer_id" id="customer_id" data-parsley-required-message="You Must Select 1 Customer" required>
-                                            <option value="0">None</option>
-                                            <?php
-                                            foreach ($customer as  $customer) {
-                                              echo '<option value="'.$customer->id_customer .'"'.
-                                              (($method=="edit")?(($customer->id_customer==$sell_invoice->customer_id)?"selected":""):"")
-                                              .' >'.$customer->name.'</option>';
-                                            }
-                                            ?>
+                                            
                                           </select>
                                       </div>                                      
                               </div>
@@ -259,5 +252,27 @@
     } 
     echo (($method=="edit")?"var method='edit';":"var method='add';");
     ?>    
+    $(document).ready(function() {
+        $('body').on('change','#city_id', function(){
+             var City_Id = $(this).val();
+             var url = $("#base").val();
+             alert(url);
+            $.ajax({
+                url: url + "Sellinvoice/get_customer_from_city/" +City_Id,
+                type: "POST",
+                success: function(result)
+                {
+                    $(parent).find('.mtouch').val(result);
+                    Quantity = $(parent).find('.mGr_W').val() * 1;
+                    Total = result * Quantity / 100;
+                    $(parent).find('.mFine').val(Total);
+                    
+                    calculate_total();
+                }	
+            });
+            
+            return false;
+        });
+    });
 </script>
 <script src="<?php echo base_url('assets/admin');?>/custom/sellinvoice.js"></script>

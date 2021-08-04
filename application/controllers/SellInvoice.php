@@ -24,6 +24,7 @@ class  SellInvoice extends CI_Controller {
 	{
 		$this->General_model->auth_check();
 		$data["customer"]=$this->General_model->get_all_where('customer','status','1');
+		$data["city"]=$this->General_model->get_all_where('city','status','1');
 		$data["product"]=$this->General_model->get_all_where('product','status','1');
 		$data["method"]="add";
 		$data['page_title']="Sale Invoice";

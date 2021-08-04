@@ -6,7 +6,7 @@ class City extends CI_Controller {
         parent::__construct();
         $this->load->helper('url');
         $this->load->model('Genral_datatable');
-        $this->load->model('General_model');
+        $this->load->model('general_model');
         $this->load->database();
         $this->load->library('session');
     }
@@ -19,6 +19,13 @@ class City extends CI_Controller {
         $this->load->view('admin/controller/sidebar');
         $this->load->view('admin/setting/city',$data);
         $this->load->view('admin/controller/footer');
+    }
+    public function get_customer_from_city()
+    {
+        $cityid=$this->input->post("cityid");
+        $sql = $this->general_model->get_data('customer','city_id','*',$cityid);
+        
+
     }
     function getLists(){
         $table='city';

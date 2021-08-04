@@ -34,5 +34,6 @@
     </head>
     <body cz-shortcut-listen="true">
         <!-- Begin page -->
+        <input type="hidden" id="base" value="<?php echo base_url(); ?>">
         <div id="wrapper">
             <?php include ("navbar.php");?>
